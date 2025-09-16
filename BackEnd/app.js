@@ -9,3 +9,25 @@ const PORT=process.env.PORT || 5000
 App.listen(PORT,()=>{
     console.log(`🚀 Servidor Corriendo en: http://localhost:${PORT}`)
 })
+
+// ---> Para permitir el Acceso de otro Servidor
+const cors=require('cors')
+App.use(cors())
+// --> Convierte la BD en un archivo de texto plano
+App.use(express.json())
+
+const conexion= require('./Server/database')
+// ---> Ruta de la Base de Datos: Tabla Alumnos
+App.get('/Alumnos',(req,res)=>{
+    // req --> Request 
+    // res --> Resolve
+    const query='SELECT * FROM Alumnos';
+    conexion.all(query,[],(Error,Filas)=>{
+        if(Error){
+            return res.status(500).send.json({Error: 'No se pudo establecer conexion'})
+        }
+        else{
+            res.json(Filas)
+        }
+    })
+})

@@ -20,3 +20,5 @@ db.run(`
    Nombre TEXT,
    Edad INTEGER
 )`)
+
+module.exports=db;
